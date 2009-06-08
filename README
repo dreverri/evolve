@@ -1,0 +1,72 @@
+Evolve is a python schema migration tool that uses JSON and JSON-Schema to describe tables and changes.
+
+Example:
+import evolve
+
+self.repo = evolve.Repository()
+change = {
+	"change":"create",
+	"schema":{
+		"id":"person",
+		"type":"object",
+		"properties":{
+			"id":{"type":"string"}
+		}
+	}
+}
+
+# declare a new branch
+branch = self.repo.branch('master')
+
+# add the change
+branch.add(change)
+
+# commit the change
+branch.commit('create person table')
+
+# branch master to b3
+b3 = self.repo.branch('b3','master')
+change2 = {
+	"change":"alter.add",
+	"schema":{
+		"id":"person",
+		"type":"object",
+		"properties":{
+			"name":{"type":"string"}
+		}
+	}
+}
+b3.add(change2)
+b3.commit('added name field')
+
+# branch master to b4
+b4 = self.repo.branch('b4','master')
+change3 = {
+	"change":"alter.add",
+	"schema":{
+		"id":"person",
+		"type":"object",
+		"properties":{
+			"last_name":{"type":"string"}
+		}
+	}
+}
+b4.add(change3)
+b4.commit('added last name field')
+
+# generate a migration path from b3 to b4 (roll back to master, roll forward to b4)
+migration = self.repo.migrate(b3.parent.commit_id,b4.parent.commit_id)
+
+
+TODO:
+initialize repository from database
+-setup a schema table in the database to track versioning
+
+generate SQL statements from sqlalchemy and migrate
+
+merge migrations
+-no need to perform multiple modifications to a field during roll back if the field if dropped at the end of the roll back
+
+verify changes with jsonschema
+
+verify records with jsonschema
