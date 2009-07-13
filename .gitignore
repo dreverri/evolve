@@ -1,1 +1,14 @@
+.DS_Store
+erl_crash.dump
 *.pyc
+*.swp
+*.swo
+*.pid
+*.log
+*.pyc
+*.svn
+*.hg
+*.tmproj
+*~
+_trial_temp
+tags
