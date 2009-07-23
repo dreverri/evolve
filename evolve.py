@@ -98,6 +98,7 @@ class Schema:
         
     def verify(self,change):
         """Verify change against the working schema"""
+        # TODO: alter.drop
         tables = self.tables
         action = change['change']
         schema = change['schema']
