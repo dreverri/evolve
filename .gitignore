@@ -12,3 +12,6 @@ erl_crash.dump
 *~
 _trial_temp
 tags
+*.egg-info
+decorator-*
+nose-*

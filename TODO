@@ -1,0 +1,9 @@
+# Usage:
+# evolve init db://user:pass@host:port
+# evolve clone db://user:pass@host:port
+# add changes to changes.json
+# evolve verify changes.json
+# evolve commit changes.json
+# evolve push db://user:pass@host:port master
+# evolve deploy db://user:pass@host:port master
+# evolve deploy . master
