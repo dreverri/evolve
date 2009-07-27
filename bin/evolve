@@ -1,0 +1,11 @@
+#!/usr/bin/python
+
+import sys
+from evolve.commands import run
+
+
+if __name__ == "__main__":
+    try:
+        run()
+    except KeyboardInterrupt:
+        sys.exit(1)

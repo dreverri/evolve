@@ -1,6 +1,9 @@
 # Usage:
 # evolve init db://user:pass@host:port
 # evolve clone db://user:pass@host:port
+
+# evolve init .
+
 # add changes to changes.json
 # evolve verify changes.json
 # evolve commit changes.json

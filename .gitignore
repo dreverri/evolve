@@ -15,3 +15,5 @@ tags
 *.egg-info
 decorator-*
 nose-*
+build/
+dist/

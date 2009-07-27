@@ -7,7 +7,7 @@ except ImportError:
     import simplejson as json
 
 
-class FileRepository:
+class FileRepository(object):
     def initialize(self, directory):
         """Initialize the given directory"""
         if self.is_repository(directory):

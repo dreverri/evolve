@@ -7,7 +7,6 @@ class Schema(object):
         
     def verify(self, change):
         """Verify change against the working schema"""
-        # TODO: alter.drop
         tables = self.tables
         action = change['change']
         schema = change['schema']
@@ -20,7 +19,7 @@ class Schema(object):
         if action == 'drop':
             return table in tables
         
-        if action == 'alter.add' or action == 'alter.rename':
+        if action == 'alter.add':
             if table not in tables:
                 return False
             for field in fields:
@@ -28,7 +27,7 @@ class Schema(object):
                     return False
             return True
         
-        if action == 'alter.modify':
+        if action in ['alter.modify', 'alter.rename', 'alter.drop']:
             if table not in tables:
                 return False
             for field in fields:
@@ -67,3 +66,20 @@ class Schema(object):
             change['old_schema'] = copy.deepcopy(tables[table])
             for field in fields:
                 del tables[table]['properties'][field]
+                
+    def make_change_reversible(self, change):
+        table = change['schema']['id']
+        
+        if change['change'] == 'drop':
+            change['schema'] = self.tables[table]
+            
+        if change['change'] == 'alter.drop':
+            for prop in change['schema']['properties']:
+                change['schema']['properties'][prop] = self.tables[table]['properties'][prop]
+                
+        if change['change'] == 'alter.modify':
+            change['old_schema'] = copy.deepcopy(change['schema'])
+            for prop in change['old_schema']['properties']:
+                change['old_schema']['properties'][prop] = self.tables[table]['properties'][prop]
+                
+        return change

@@ -11,5 +11,6 @@ setup(name='Evolve',
     zip_safe=False,
     test_suite="nose.collector",
     tests_require="nose",
-    install_requires=["sqlalchemy", "sqlalchemy-migrate"]
+    install_requires=["sqlalchemy", "sqlalchemy-migrate"],
+    scripts=['bin/evolve']
     )
